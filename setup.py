@@ -35,8 +35,9 @@ setup(
     description="Optical simulation of the Simons Observatory Small Aperture Telescope.",
     author="Grace E. Chesmore, UChicago Lab",
     author_email="chesmore@uchicago.edu",
-    package_dir={"sosat_optics": "sosat_optics"},
-    packages=packages
+    package_dir={
+        "sosat_optics": "sosat_optics"},
+    packages=packages,
 )
 
 
