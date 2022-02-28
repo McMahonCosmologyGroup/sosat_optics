@@ -977,8 +977,8 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
         dist_m1a_lyot = abs((y_lyot - P_m1a[1]) / tan_og_t[1])
         pos_lyot = P_m1a + dist_m1a_lyot * tan_og_t
         
-#         if ( (pos_lyot[0]**2 + pos_lyot[2]**2) >= (210/2)**2):
-#             continue
+        if ( (pos_lyot[0]**2 + pos_lyot[2]**2) >= (210/2)**2):
+            continue
 
         
         dist_lyot_ap = abs((tele_geo.y_source - pos_lyot[1]) / tan_og_t[1])
