@@ -35,22 +35,23 @@ setup(
     description="Optical simulation of the Simons Observatory Small Aperture Telescope.",
     author="Grace E. Chesmore, UChicago Lab",
     author_email="chesmore@uchicago.edu",
-    package_dir={"sosat_optics": "sosat_optics"},
-    packages=packages
+    package_dir={
+        "sosat_optics": "sosat_optics"},
+    packages=packages,
 )
 
 
-# # Install requirements
-# with pathlib.Path('requirements.txt').open() as requirements_txt:
-#     install_requires = [
-#         str(requirement)
-#         for requirement
-#         in pkg_resources.parse_requirements(requirements_txt)
-#     ]
+# Install requirements
+with pathlib.Path('requirements.txt').open() as requirements_txt:
+    install_requires = [
+        str(requirement)
+        for requirement
+        in pkg_resources.parse_requirements(requirements_txt)
+    ]
 
-# setuptools.setup(
-#     install_requires=install_requires,
-# )
+setuptools.setup(
+    install_requires=install_requires,
+)
 
 # Trick to installing on Field computer:
 # /opt/anaconda3/bin/pip3 install Desktop/test_package/holog_daq/
