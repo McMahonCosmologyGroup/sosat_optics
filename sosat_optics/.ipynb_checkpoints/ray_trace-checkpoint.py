@@ -528,6 +528,10 @@ def aperature_fields(P_rx, tele_geo, plot, col):
 
 
 def rx_to_lyot(P_rx, tele_geo, plot, col):
+    
+    if plot == 1:
+        ot_geo.plot_lenses()
+        
     alph = 0.05  # transparency of plotted lines
 
     horn_fwhp = tele_geo.th_fwhp
@@ -977,10 +981,6 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
         dist_m1a_lyot = abs((y_lyot - P_m1a[1]) / tan_og_t[1])
         pos_lyot = P_m1a + dist_m1a_lyot * tan_og_t
         
-        if ( (pos_lyot[0]**2 + pos_lyot[2]**2) >= (210/2)**2):
-            continue
-
-        
         dist_lyot_ap = abs((tele_geo.y_source - pos_lyot[1]) / tan_og_t[1])
 
         total_path_length = (
@@ -1005,39 +1005,44 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
                 tan_rx_m3b_t[1] ** 2))
 
         ################################################
-        if plot == 1:
-            if np.mod(ii, 53) == 0:
-                if ii == 53:
-                    ot_geo.plot_lenses()
-                alph = 0.2
-                plt.plot([y_0, y_m3b], [z_0, z_m3b],
-                         "-", color=col, alpha=alph)
-                plt.plot([y_m3b, y_m3a], [z_m3b, z_m3a],
-                         "-", color=col, alpha=alph)
-                plt.plot([y_m3a, y_m2b], [z_m3a, z_m2b],
-                         "-", color=col, alpha=alph)
-                plt.plot([y_m2b, y_m2a], [z_m2b, z_m2a],
-                         "-", color=col, alpha=alph)
-                plt.plot([y_m2a, y_m1b], [z_m2a, z_m1b],
-                         "-", color=col, alpha=alph)
-                plt.plot([y_m1b, y_m1a], [z_m1b, z_m1a],
-                         "-", color=col, alpha=alph)
-                plt.plot([y_m1a, pos_lyot[1]], [z_m1a, pos_lyot[2]],
-                         "-", color=col, alpha=alph)
-                plt.plot([pos_lyot[1],pos_ap[1]], [pos_lyot[2],pos_ap[2]],
-                         "-", color=col, alpha=alph)
+        
+        if ( (pos_lyot[0]**2 + pos_lyot[2]**2) <= (210/2)**2):
+
+            if plot == 1:
+                if np.mod(ii, 53) == 0:
+                    alph = 0.2
+                    plt.plot([y_0, y_m3b], [z_0, z_m3b],
+                             "-", color=col, alpha=alph)
+                    plt.plot([y_m3b, y_m3a], [z_m3b, z_m3a],
+                             "-", color=col, alpha=alph)
+                    plt.plot([y_m3a, y_m2b], [z_m3a, z_m2b],
+                             "-", color=col, alpha=alph)
+                    plt.plot([y_m2b, y_m2a], [z_m2b, z_m2a],
+                             "-", color=col, alpha=alph)
+                    plt.plot([y_m2a, y_m1b], [z_m2a, z_m1b],
+                             "-", color=col, alpha=alph)
+                    plt.plot([y_m1b, y_m1a], [z_m1b, z_m1a],
+                             "-", color=col, alpha=alph)
+                    plt.plot([y_m1a, pos_lyot[1]], [z_m1a, pos_lyot[2]],
+                             "-", color=col, alpha=alph)
+                    plt.plot([pos_lyot[1],pos_ap[1]], [pos_lyot[2],pos_ap[2]],
+                             "-", color=col, alpha=alph)
 
         #         Write out
         out[0, ii] = pos_ap[0]
         out[1, ii] = pos_ap[1]
         out[2, ii] = pos_ap[2]
 
-        out[3, ii] = total_path_length
-        out[4, ii] = np.exp(
-            (-0.5)
-            * (de_ho ** 2 + de_ve ** 2)
-            / (horn_fwhp / (np.sqrt(8 * np.log(2)))) ** 2
-        )
+        if ( (pos_lyot[0]**2 + pos_lyot[2]**2) <= (210/2)**2):
+            out[3, ii] = total_path_length
+            out[4, ii] = np.exp(
+                (-0.5)
+                * (de_ho ** 2 + de_ve ** 2)
+                / (horn_fwhp / (np.sqrt(8 * np.log(2)))) ** 2
+            )
+        else:
+            out[3, ii] = 0
+            out[4, ii] = 0
 
         out[5, ii] = N_hat_t[0]
         out[6, ii] = N_hat_t[1]
