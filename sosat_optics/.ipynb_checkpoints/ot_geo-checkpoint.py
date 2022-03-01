@@ -11,7 +11,7 @@ class LatGeo:
     """
 
     F_2 = 7000
-    n_si = 3.41
+    n_si = 3.416
     n_vac = 1.0
 
     th_fwhp = 35 * np.pi / 180

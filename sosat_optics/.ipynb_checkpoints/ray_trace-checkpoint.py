@@ -541,8 +541,8 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
     N_linear = tele_geo.n_scan
     focal = tele_geo.F_2
     # Step 1:  grid the plane of rays shooting out of receiver feed
-    theta = np.linspace((np.pi / 2) - 0.33, (np.pi / 2) + 0.33, N_linear)
-    phi = np.linspace((np.pi / 2) - 0.33, (np.pi / 2) + 0.33, N_linear)
+    theta = np.linspace((np.pi / 2) - 0.4, (np.pi / 2) + 0.4, N_linear)
+    phi = np.linspace((np.pi / 2) - 0.4, (np.pi / 2) + 0.4, N_linear)
 
     theta, phi = np.meshgrid(theta, phi)
     theta = np.ravel(theta)
@@ -840,9 +840,6 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
         beta = tan_og_t[1]
         gamma = tan_og_t[2]
 
-        #         if ((x_m2a ** 2 + y_m2a ** 2) >= (180**2)):
-        #             continue
-
         def root_z1b(t):
 
             x = x_m2a + alpha * t
@@ -1006,7 +1003,7 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
 
         ################################################
         
-        if ( (pos_lyot[0]**2 + pos_lyot[2]**2) <= (210/2)**2):
+        if ( (pos_lyot[0]**2 + pos_lyot[2]**2) <= (420/2)**2) or ((x_m2a ** 2 + y_m2a ** 2) >= (150**2)):
 
             if plot == 1:
                 if np.mod(ii, 53) == 0:
@@ -1033,7 +1030,7 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
         out[1, ii] = pos_ap[1]
         out[2, ii] = pos_ap[2]
 
-        if ( (pos_lyot[0]**2 + pos_lyot[2]**2) <= (210/2)**2):
+        if ( (pos_lyot[0]**2 + pos_lyot[2]**2) <= (420/2)**2) or ((x_m2a ** 2 + y_m2a ** 2) >= (150**2)):
             out[3, ii] = total_path_length
             out[4, ii] = np.exp(
                 (-0.5)
