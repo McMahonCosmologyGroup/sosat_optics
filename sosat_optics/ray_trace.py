@@ -1003,7 +1003,7 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
 
         ################################################
         
-        if ( (pos_lyot[0]**2 + pos_lyot[2]**2) <= (420/2)**2) or ((x_m2a ** 2 + y_m2a ** 2) >= (150**2)):
+        if ( (pos_lyot[0]**2 + pos_lyot[2]**2) <= (420/2)**2) and ((x_m2a ** 2 + z_m2a ** 2) <= (210**2)):
 
             if plot == 1:
                 if np.mod(ii, 53) == 0:
@@ -1030,7 +1030,7 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
         out[1, ii] = pos_ap[1]
         out[2, ii] = pos_ap[2]
 
-        if ( (pos_lyot[0]**2 + pos_lyot[2]**2) <= (420/2)**2) or ((x_m2a ** 2 + y_m2a ** 2) >= (150**2)):
+        if ( (pos_lyot[0]**2 + pos_lyot[2]**2) <= (420/2)**2) and ((x_m2a ** 2 + z_m2a ** 2) <= (210**2)):
             out[3, ii] = total_path_length
             out[4, ii] = np.exp(
                 (-0.5)
