@@ -14,7 +14,7 @@ class LatGeo:
     n_si = 3.416
     n_vac = 1.0
 
-    th_fwhp = 35 * np.pi / 180
+    th_fwhp = 40 * np.pi / 180
     n_scan = 100
 
     de_ang = 0.5 / 60 * np.pi / 180  # arcsec = 1/60 degree
