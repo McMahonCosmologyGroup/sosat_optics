@@ -1,6 +1,7 @@
-import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
+import numpy as np
+
 
 def zero_pad(x_in,y_in,beam_in,pts):
     x_int = abs(x_in[0,0]-x_in[0,1])
