@@ -1048,4 +1048,19 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
         out[8, ii] = tan_og_t[0]
         out[9, ii] = tan_og_t[1]
         out[10, ii] = tan_og_t[2]
-    return out
+        
+    len_sim = int(np.sqrt(len(out[0])))
+    x_sim = np.reshape(out[0], (len_sim, len_sim))  # [mm]
+    y_sim = np.reshape(out[2], (len_sim, len_sim))  # [mm]
+
+    indx_x = np.where((np.isnan(x_sim)==False) & (abs(x_sim)<=250))
+    indx_y = np.where((np.isnan(y_sim)==False) & (abs(y_sim)<=250))
+
+    x_sim_new = np.linspace(np.min(x_sim[indx_x]),np.max(x_sim[indx_x]),len_sim)
+    y_sim_new = np.linspace(np.min(y_sim[indx_y]),np.max(y_sim[indx_y]),len_sim)
+    x_sim,y_sim = np.meshgrid(x_sim_new,y_sim_new)
+
+    a_sim = np.reshape(out[4], (len_sim, len_sim))
+    p_sim = np.reshape(out[3], (len_sim, len_sim))
+    
+    return x_sim,y_sim,a_sim,p_sim
