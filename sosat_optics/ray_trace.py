@@ -25,7 +25,7 @@ def aperature_fields(P_rx, tele_geo, plot, col):
     n_si = tele_geo.n_si
 
     N_linear = tele_geo.n_scan
-    focal = tele_geo.F_2
+
     # Step 1:  grid the plane of rays shooting out of receiver feed
     theta = np.linspace((np.pi / 2) - 0.35, (np.pi / 2) + 0.35, N_linear)
     phi = np.linspace((np.pi / 2) - 0.35, (np.pi / 2) + 0.35, N_linear)
@@ -539,7 +539,7 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
     n_si = tele_geo.n_si
 
     N_linear = tele_geo.n_scan
-    focal = tele_geo.F_2
+
     # Step 1:  grid the plane of rays shooting out of receiver feed
     theta = np.linspace((np.pi / 2) - 0.4, (np.pi / 2) + 0.4, N_linear)
     phi = np.linspace((np.pi / 2) - 0.4, (np.pi / 2) + 0.4, N_linear)

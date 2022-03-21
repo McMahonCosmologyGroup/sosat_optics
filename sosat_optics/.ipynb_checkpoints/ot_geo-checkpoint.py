@@ -5,24 +5,21 @@ import scipy.ndimage as ndimage
 from PIL import Image, ImageOps
 
 
-class LatGeo:
+class SatGeo:
     """
-    LAT Geometry.
+    SAT Geometry.
     """
 
-    F_2 = 7000
     n_si = 3.416
     n_vac = 1.0
 
-    th_fwhp = 40 * np.pi / 180
+    th_fwhp = 35 * np.pi / 180
     n_scan = 100
 
-    de_ang = 0.5 / 60 * np.pi / 180  # arcsec = 1/60 degree
     lambda_ = (30.0 / 150.0) * 0.01  # [m]
     k = 2 * np.pi / lambda_
 
-    lyot_y = 453.62
-
+    diam = 0.42 # diameter of window
     x_ap = 0
     y_ap = 0
     z_ap = 0
@@ -91,10 +88,6 @@ def z1a(x, y):
         amp = (c * r ** 2) / (1 + np.sqrt(1 - ((1 + k) * c ** 2 * r ** 2)))
         amp += a_1 * r ** 2 + a_2 * r ** 4 + a_3 * r ** 6
     return amp * 10
-
-
-# fix units in all the d_ functions!!!!!
-
 
 def d_z1b(x, y):
     """

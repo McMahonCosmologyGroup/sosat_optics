@@ -2,9 +2,33 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 
-def beam_convolve(x, y, beam, apert1, apert2,plots):
+def rad_to_arcmin(rads):
+    """
+    Convert radians to arcmins.
+    """
+    return rads*180*60/np.pi
 
-    #     Define g
+def ghz_to_m(freq_ghz):
+    """
+    Convert frequency [GHz] to wavelength [m].
+    """
+    ff_hz = freq_ghz * 1e9 # frequency in [Hz]
+    wavelength = (3 * 10 ** 8) / ff_hz # wavelength in [m]
+    return wavelength
+
+def m_to_ghz(wavelength):
+    """
+    Convert wavelength [m] to frequency [GHz]s.
+    """
+    ff_hz =  (3 * 10 ** 8) / wavelength
+    freq_ghz = ff_hz/1e9
+    return freq_ghz
+
+def beam_convolve(x, y, beam, apert1, apert2,plots):
+    """
+    Convolve beam with square aperture (fields defined as disc).
+    """
+    # Define g
     if apert1 < apert2:
         disc = np.cos(np.pi * y / apert2)
         disc = np.where(abs(y) <= apert2 / 2, disc, 0)
