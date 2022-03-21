@@ -1,6 +1,8 @@
 import numpy as np
+import matplotlib
+import matplotlib.pyplot as plt
 
-def beam_convolve(x, y, beam, apert1, apert2):
+def beam_convolve(x, y, beam, apert1, apert2,plots):
 
     #     Define g
     if apert1 < apert2:
@@ -12,7 +14,7 @@ def beam_convolve(x, y, beam, apert1, apert2):
         disc = np.cos(np.pi * x / apert1)
         disc = np.where(abs(x) <= apert1 / 2, disc, 0)
         disc = np.where(abs(y) <= apert2 / 2, disc, 0)
-
+    
     tmp = np.fft.fftshift(disc)
     tmp = np.fft.fft2(tmp)
     # Matrix G
@@ -27,6 +29,93 @@ def beam_convolve(x, y, beam, apert1, apert2):
     tmp = np.fft.ifftshift(beam_conv)
     tmp = np.fft.ifft2(tmp)
     beam_final = np.fft.ifftshift(tmp)
+
+    if plots==1:
+        plt.figure(figsize = (14,4))
+        plt.subplot(121)
+        plt.title("WG Amp")
+        plt.ylabel("cm")
+        plt.xlabel("cm")
+        plt.pcolormesh(x,y,10*np.log10(abs(disc)/np.max(abs(disc))),vmin = -25,shading = 'auto')
+        plt.colorbar(label = 'dB')
+        plt.axis("equal")
+
+        plt.subplot(122)
+        plt.title("WG Phase")
+        plt.ylabel("cm")
+        plt.xlabel("cm")
+        plt.pcolormesh(x,y,np.arctan2(np.imag(disc),np.real(disc)),shading = 'auto')
+        plt.axis("equal")
+        plt.xlim(-2,2)
+        plt.ylim(-2,2)
+        plt.colorbar()
+        plt.show()    
+        plt.figure(figsize = (14,4))
+        plt.subplot(121)
+        plt.title("WG FFT Amp")
+        plt.pcolormesh(x,y,10*np.log10(abs(disc_fft)/np.max(abs(disc_fft))),vmin = -25,shading = 'auto')
+        plt.colorbar(label = 'dB')
+        plt.ylabel("cm")
+        plt.xlabel("cm")
+        plt.axis("equal")
+        plt.subplot(122)
+        plt.title("WG FFT Phase")
+        plt.pcolormesh(x,y,np.arctan2(np.imag(disc_fft),np.real(disc_fft)),shading = 'auto')
+        plt.colorbar()
+        plt.ylabel("cm")
+        plt.xlabel("cm")
+        plt.axis("equal")
+        plt.show()        
+        plt.figure(figsize = (14,4))
+        plt.subplot(121)
+        plt.title("Input Beam Amp")
+        plt.pcolormesh(x,y,10*np.log10(abs(beam)/np.max(abs(beam))),vmin = -25,shading = 'auto')
+        plt.colorbar(label = 'dB')
+        plt.ylabel("cm")
+        plt.xlabel("cm")
+        plt.axis("equal")
+        plt.subplot(122)
+        plt.title("Input Beam Phase")
+        plt.pcolormesh(x,y,np.arctan2(np.imag(beam),np.real(beam)),shading = 'auto')
+        plt.colorbar()
+        plt.ylabel("cm")
+        plt.xlabel("cm")
+        plt.axis("equal")
+        plt.show() 
+
+        plt.figure(figsize = (14,4))
+        plt.subplot(121)
+        plt.title("Input Beam FFT Amp")
+        plt.pcolormesh(x,y,10*np.log10(abs(beam_fft)/np.max(abs(beam_fft))),vmin = -25,shading = 'auto')
+        plt.colorbar(label = 'dB')
+        plt.ylabel("cm")
+        plt.xlabel("cm")
+        plt.axis("equal")
+        plt.subplot(122)
+        plt.title("Input Beam FFT Phase")
+        plt.pcolormesh(x,y,np.arctan2(np.imag(beam_fft),np.real(beam_fft)),shading = 'auto')
+        plt.colorbar()
+        plt.ylabel("cm")
+        plt.xlabel("cm")
+        plt.axis("equal")
+        plt.show()        
+
+        plt.figure(figsize = (14,4))
+        plt.subplot(121)
+        plt.title("Input Beam FFT x WG FFT Amp")
+        plt.pcolormesh(x,y,10*np.log10(abs(beam_conv)/np.max(abs(beam_conv))),vmin = -25,shading = 'auto')
+        plt.colorbar(label = 'dB')
+        plt.ylabel("cm")
+        plt.xlabel("cm")
+        plt.axis("equal")
+        plt.subplot(122)
+        plt.title("Input Beam FFT x WG FFT Phase")
+        plt.pcolormesh(x,y,np.arctan2(np.imag(beam_conv),np.real(beam_conv)),shading = 'auto')
+        plt.colorbar()
+        plt.ylabel("cm")
+        plt.xlabel("cm")
+        plt.axis("equal")
+        plt.show()   
 
     return x, y, beam_final
 
