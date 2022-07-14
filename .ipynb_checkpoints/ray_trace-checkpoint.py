@@ -145,9 +145,7 @@ def aperature_fields(P_rx, tele_geo, plot, col):
         P_m3a = np.array([x_m3a, y_m3a, z_m3a])
 
         ###### in M1 cordinates ##########################
-        x_m3a_temp, y_m3a_temp, z_m3a_temp = tele_into_m3a(
-            x_m3a, y_m3a, z_m3a
-        ) 
+        x_m3a_temp, y_m3a_temp, z_m3a_temp = tele_into_m3a(x_m3a, y_m3a, z_m3a)
         x_m3b_temp, y_m3b_temp, z_m3b_temp = tele_into_m3a(
             P_m3b[0], P_m3b[1], P_m3b[2]
         )  # P_1a temp
@@ -273,7 +271,7 @@ def aperature_fields(P_rx, tele_geo, plot, col):
         y_m2a = P_m2b[1] + beta * t_m2a
         z_m2a = P_m2b[2] + gamma * t_m2a
         P_m2a = np.array([x_m2a, y_m2a, z_m2a])
-        
+
         ###### in M1 cordinates ##########################
         x_m2b_temp, y_m2b_temp, z_m2b_temp = tele_into_m2a(
             x_m2b, y_m2b, z_m2b
@@ -291,7 +289,7 @@ def aperature_fields(P_rx, tele_geo, plot, col):
         tan_m2b_m2a = vec_m2b_m2a / dist_m2b_m2a
 
         # Outgoing ray
- 
+
         tan_og_vac = snell_vec(n_si, n_vac, N_hat, tan_m2b_m2a)
 
         # Transform back to telescope cordinates
@@ -314,7 +312,7 @@ def aperature_fields(P_rx, tele_geo, plot, col):
         tan_og_t[0] = tan_og_vac[0]
         tan_og_t[1] = tan_og_vac[1] * np.cos(th2_l2) - tan_og_vac[2] * np.sin(th2_l2)
         tan_og_t[2] = tan_og_vac[1] * np.sin(th2_l2) + tan_og_vac[2] * np.cos(th2_l2)
- 
+
         alpha = tan_og_t[0]
         beta = tan_og_t[1]
         gamma = tan_og_t[2]
@@ -448,7 +446,7 @@ def aperature_fields(P_rx, tele_geo, plot, col):
         tan_og_t[1] = tan_og_vac[1] * np.cos(th1_l1) - tan_og_vac[2] * np.sin(th1_l1)
         tan_og_t[2] = tan_og_vac[1] * np.sin(th1_l1) + tan_og_vac[2] * np.cos(th1_l1)
 
-#         ################################################
+        #         ################################################
         dist_m1a_ap = abs((y_ap - P_m1a[1]) / tan_og_t[1])
         total_path_length = (
             dist_rx_m3b
@@ -476,19 +474,20 @@ def aperature_fields(P_rx, tele_geo, plot, col):
                 alph = 0.2
                 plt.plot([y_0, y_m3b], [z_0, z_m3b], "-", color=col, alpha=alph)
                 plt.plot([y_m3b, y_m3a], [z_m3b, z_m3a], "-", color=col, alpha=alph)
-#                 plt.plot([y_m3a, y_m3a + (10*tan_og_t[1])], [z_m3a, z_m3a + (10*tan_og_t[2])], "-", color='k', alpha=alph)
+                #                 plt.plot([y_m3a, y_m3a + (10*tan_og_t[1])], [z_m3a, z_m3a + (10*tan_og_t[2])], "-", color='k', alpha=alph)
                 plt.plot([y_m3a, y_m2b], [z_m3a, z_m2b], "-", color=col, alpha=alph)
                 plt.plot([y_m2b, y_m2a], [z_m2b, z_m2a], "-", color=col, alpha=alph)
-#                 plt.plot([y_m2a,y_m2a- (50*tan_m2b_m2a_t[1])], [z_m2a,z_m2a- (50*tan_m2b_m2a_t[2])], "-", color='k')
+                #                 plt.plot([y_m2a,y_m2a- (50*tan_m2b_m2a_t[1])], [z_m2a,z_m2a- (50*tan_m2b_m2a_t[2])], "-", color='k')
 
-#                 plt.plot([y_m2a, y_m2b], [z_m2a, z_m2b], "-", color=col, alpha=alph)
+                #                 plt.plot([y_m2a, y_m2b], [z_m2a, z_m2b], "-", color=col, alpha=alph)
                 plt.plot([y_m2a, y_m1b], [z_m2a, z_m1b], "-", color=col, alpha=alph)
 
                 plt.plot([y_m1b, y_m1a], [z_m1b, z_m1a], "-", color=col, alpha=alph)
-                plt.plot([y_m1a, pos_ap[1]], [z_m1a, pos_ap[2]], "-", color=col, alpha=alph)
+                plt.plot(
+                    [y_m1a, pos_ap[1]], [z_m1a, pos_ap[2]], "-", color=col, alpha=alph
+                )
 
-
-#         Write out
+        #         Write out
         out[0, ii] = pos_ap[0]
         out[1, ii] = pos_ap[1]
         out[2, ii] = pos_ap[2]
@@ -640,9 +639,7 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
         P_m3a = np.array([x_m3a, y_m3a, z_m3a])
 
         ###### in M1 cordinates ##########################
-        x_m3a_temp, y_m3a_temp, z_m3a_temp = tele_into_m3a(
-            x_m3a, y_m3a, z_m3a
-        ) 
+        x_m3a_temp, y_m3a_temp, z_m3a_temp = tele_into_m3a(x_m3a, y_m3a, z_m3a)
         x_m3b_temp, y_m3b_temp, z_m3b_temp = tele_into_m3a(
             P_m3b[0], P_m3b[1], P_m3b[2]
         )  # P_1a temp
@@ -768,7 +765,7 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
         y_m2a = P_m2b[1] + beta * t_m2a
         z_m2a = P_m2b[2] + gamma * t_m2a
         P_m2a = np.array([x_m2a, y_m2a, z_m2a])
-        
+
         ###### in M1 cordinates ##########################
         x_m2b_temp, y_m2b_temp, z_m2b_temp = tele_into_m2a(
             x_m2b, y_m2b, z_m2b
@@ -786,7 +783,7 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
         tan_m2b_m2a = vec_m2b_m2a / dist_m2b_m2a
 
         # Outgoing ray
- 
+
         tan_og_vac = snell_vec(n_si, n_vac, N_hat, tan_m2b_m2a)
 
         # Transform back to telescope cordinates
@@ -809,14 +806,14 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
         tan_og_t[0] = tan_og_vac[0]
         tan_og_t[1] = tan_og_vac[1] * np.cos(th2_l2) - tan_og_vac[2] * np.sin(th2_l2)
         tan_og_t[2] = tan_og_vac[1] * np.sin(th2_l2) + tan_og_vac[2] * np.cos(th2_l2)
- 
+
         alpha = tan_og_t[0]
         beta = tan_og_t[1]
         gamma = tan_og_t[2]
 
-#         if ((x_m2a ** 2 + y_m2a ** 2) >= (180**2)):
-#             continue
-            
+        #         if ((x_m2a ** 2 + y_m2a ** 2) >= (180**2)):
+        #             continue
+
         def root_z1b(t):
 
             x = x_m2a + alpha * t
@@ -905,7 +902,7 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
         y_m1a = P_m1b[1] + beta * t_m1a
         z_m1a = P_m1b[2] + gamma * t_m1a
         P_m1a = np.array([x_m1a, y_m1a, z_m1a])
-            
+
         ###### in M1 cordinates ##########################
         x_m1b_temp, y_m1b_temp, z_m1b_temp = tele_into_m1a(
             x_m1b, y_m1b, z_m1b
@@ -924,7 +921,7 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
 
         # Outgoing ray
         tan_og_vac = snell_vec(n_si, n_vac, N_hat, -tan_m1b_m1a)
-        
+
         # Transform back to telescope cordinates
         N_hat_t = np.zeros(3)
         tan_m1b_m1a_t = np.zeros(3)
@@ -946,7 +943,7 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
         tan_og_t[1] = tan_og_vac[1] * np.cos(th1_l1) - tan_og_vac[2] * np.sin(th1_l1)
         tan_og_t[2] = tan_og_vac[1] * np.sin(th1_l1) + tan_og_vac[2] * np.cos(th1_l1)
 
-#         ################################################
+        #         ################################################
         dist_m1a_ap = abs((tele_geo.y_source - P_m1a[1]) / tan_og_t[1])
 
         total_path_length = (
@@ -958,7 +955,7 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
             + dist_m1b_m1a * (n_si)
             + dist_m1a_ap
         )
-            
+
         pos_ap = P_m1a + dist_m1a_ap * tan_og_t
 
         # Estimate theta
@@ -979,9 +976,11 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
                 plt.plot([y_m2b, y_m2a], [z_m2b, z_m2a], "-", color=col, alpha=alph)
                 plt.plot([y_m2a, y_m1b], [z_m2a, z_m1b], "-", color=col, alpha=alph)
                 plt.plot([y_m1b, y_m1a], [z_m1b, z_m1a], "-", color=col, alpha=alph)
-                plt.plot([y_m1a, pos_ap[1]], [z_m1a, pos_ap[2]], "-", color=col, alpha=alph)
+                plt.plot(
+                    [y_m1a, pos_ap[1]], [z_m1a, pos_ap[2]], "-", color=col, alpha=alph
+                )
 
-#         Write out
+        #         Write out
         out[0, ii] = pos_ap[0]
         out[1, ii] = pos_ap[1]
         out[2, ii] = pos_ap[2]
@@ -1002,8 +1001,9 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
         out[10, ii] = tan_og_t[2]
     return out
 
+
 def so_to_lyot(P_so, tele_geo, plot, col):
-    
+
     alph = 0.05  # transparency of plotted lines
 
     horn_fwhp = tele_geo.th_fwhp
@@ -1025,32 +1025,34 @@ def so_to_lyot(P_so, tele_geo, plot, col):
 
         th = theta[ii]
         ph = phi[ii]
-        
+
         r_hat = [np.sin(th) * np.cos(ph), np.sin(th) * np.sin(ph), np.cos(th)]
 
         dist_so_ap = abs((y_lyot - P_so[1]) / r_hat[1])
 
-        total_path_length = (
-            dist_so_ap
-        )
+        total_path_length = dist_so_ap
 
         pos_ap = np.array(P_so) + dist_so_ap * np.array(r_hat)
 
         # Estimate theta
         de_ve = np.arctan(r_hat[0] / (-r_hat[1]))
-        de_ho = np.arctan(
-            r_hat[2] / np.sqrt(r_hat[0] ** 2 + r_hat[1] ** 2)
-        )
+        de_ho = np.arctan(r_hat[2] / np.sqrt(r_hat[0] ** 2 + r_hat[1] ** 2))
 
         ################################################
         if plot == 1:
             if np.mod(ii, 51) == 0:
                 if ii == 51:
                     ot_geo.plot_lenses()
-                alph =.2
-                plt.plot([P_so[1], pos_ap[1]], [P_so[2], pos_ap[2]], "-", color=col, alpha=alph)
+                alph = 0.2
+                plt.plot(
+                    [P_so[1], pos_ap[1]],
+                    [P_so[2], pos_ap[2]],
+                    "-",
+                    color=col,
+                    alpha=alph,
+                )
 
-#         Write out
+        #         Write out
         out[0, ii] = pos_ap[0]
         out[1, ii] = pos_ap[1]
         out[2, ii] = pos_ap[2]
@@ -1067,25 +1069,28 @@ def so_to_lyot(P_so, tele_geo, plot, col):
         out[10, ii] = r_hat[2]
     return out
 
-def project_to_data(sim, data_x, data_y,tele_geo):
+
+def project_to_data(sim, data_x, data_y, tele_geo):
     cc = np.where(sim[3, :] != 0)
-    sim_new = np.zeros(np.shape(data_x),dtype = complex)
-    x_sim = sim[0, :][cc] 
-    y_sim = sim[2, :][cc] 
+    sim_new = np.zeros(np.shape(data_x), dtype=complex)
+    x_sim = sim[0, :][cc]
+    y_sim = sim[2, :][cc]
 
     for ii in range(len(x_sim)):
 
         xx = x_sim[ii]
         yy = y_sim[ii]
 
-        if np.max(data_x[:,int(len(data_x)/2)]) < np.max(xx) or np.max(data_y[int(len(data_y)/2),:]) < np.max(yy):
+        if np.max(data_x[:, int(len(data_x) / 2)]) < np.max(xx) or np.max(
+            data_y[int(len(data_y) / 2), :]
+        ) < np.max(yy):
             continue
         else:
-             
-            index_x = np.searchsorted(data_x[:,int(len(data_x)/2)], xx)
-            index_y = np.searchsorted(data_y[index_x,:], yy)
-            
-            sim_new[index_x,index_y] = sim[4,:][cc][ii] * np.exp(
+
+            index_x = np.searchsorted(data_x[:, int(len(data_x) / 2)], xx)
+            index_y = np.searchsorted(data_y[index_x, :], yy)
+
+            sim_new[index_x, index_y] = sim[4, :][cc][ii] * np.exp(
                 np.complex(0, 1) * tele_geo.k * sim[3, :][cc][ii] / 1e3
             )
 

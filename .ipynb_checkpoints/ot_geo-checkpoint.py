@@ -26,7 +26,7 @@ class LatGeo:
     x_ap = 0
     y_ap = 0
     z_ap = 0
-    
+
     y_source = 0
 
 
@@ -37,31 +37,32 @@ th2_l2 = np.pi / 2
 th1_l3 = np.pi / 2
 th2_l3 = np.pi / 2
 
-lens_t1 = 4.5633E1
-lens_t2 = 4.9101E1
-lens_t3 = 3.1790E1
+lens_t1 = 4.5633e1
+lens_t2 = 4.9101e1
+lens_t3 = 3.1790e1
 
-lens3_y = (1.5+.45+2.1553254002897502)*1e1
+lens3_y = (1.5 + 0.45 + 2.1553254002897502) * 1e1
 lens2_y = lens3_y + 10.676699903527055e1 + lens_t3
-lens1_y = lens2_y + 3.8933E1 + +.45E1 + .5E1 + .45E1 + 47.776194563951336e1 + lens_t2
-y_lyot = lens1_y + 1.0553506281444689E1 + lens_t1
+lens1_y = lens2_y + 3.8933e1 + +0.45e1 + 0.5e1 + 0.45e1 + 47.776194563951336e1 + lens_t2
+y_lyot = lens1_y + 1.0553506281444689e1 + lens_t1
 
 
-lyot_y = lens1_y +10.5
+lyot_y = lens1_y + 10.5
+
 
 def z1b(x, y):
     """
     Surface shape of lens 1 side B.
     """
-    
-    x_temp = x/1e1
-    y_temp = y/1e1
 
-    c = -5.97879325E-3
+    x_temp = x / 1e1
+    y_temp = y / 1e1
+
+    c = -5.97879325e-3
     k = 29.99835006
-    a_1 = 6.86096781E-3
-    a_2 = 4.44719534E-7
-    a_3 = -2.62178001E-9
+    a_1 = 6.86096781e-3
+    a_2 = 4.44719534e-7
+    a_3 = -2.62178001e-9
 
     r = np.sqrt(x_temp ** 2 + y_temp ** 2)
     if 1 == 0:
@@ -69,21 +70,21 @@ def z1b(x, y):
     else:
         amp = (c * r ** 2) / (1 + np.sqrt(1 - ((1 + k) * c ** 2 * r ** 2)))
         amp += a_1 * r ** 2 + a_2 * r ** 4 + a_3 * r ** 6
-    return amp*10
+    return amp * 10
 
 
 def z1a(x, y):
     """
     Surface shape of lens 1 side A.
     """
-    x_temp = x/1e1
-    y_temp = y/1e1
+    x_temp = x / 1e1
+    y_temp = y / 1e1
 
-    c = 9.65674282E-3
+    c = 9.65674282e-3
     k = -30.00122787
-    a_1 = 1.45021174E-3
-    a_2 = 2.84858123E-6
-    a_3 = -5.02176737E-9
+    a_1 = 1.45021174e-3
+    a_2 = 2.84858123e-6
+    a_3 = -5.02176737e-9
 
     r = np.sqrt(x_temp ** 2 + y_temp ** 2)
     if 1 == 0:
@@ -91,25 +92,27 @@ def z1a(x, y):
     else:
         amp = (c * r ** 2) / (1 + np.sqrt(1 - ((1 + k) * c ** 2 * r ** 2)))
         amp += a_1 * r ** 2 + a_2 * r ** 4 + a_3 * r ** 6
-    return amp*10
+    return amp * 10
+
 
 ## fix units in all the d_ functions!!!!!
+
 
 def d_z1b(x, y):
     """
     Normal vector of surface of lens 1 side A.
     """
-    c = -5.97879325E-3
+    c = -5.97879325e-3
     k = 29.99835006
-    a_1 = 6.86096781E-3
-    a_2 = 4.44719534E-7
-    a_3 = -2.62178001E-9
+    a_1 = 6.86096781e-3
+    a_2 = 4.44719534e-7
+    a_3 = -2.62178001e-9
 
-    x_temp = x/1e1
-    y_temp = y/1e1
+    x_temp = x / 1e1
+    y_temp = y / 1e1
     r = np.sqrt(x_temp ** 2 + y_temp ** 2)
 
-    coeff_1 = (a_1 * 2) + (a_2 * 4 * r ** 2) + (a_3 * 6 * r ** 4) 
+    coeff_1 = (a_1 * 2) + (a_2 * 4 * r ** 2) + (a_3 * 6 * r ** 4)
     coeff_2 = (c * 2) / (1 + np.sqrt(1 - ((1 + k) * c ** 2 * r ** 2)))
     coeff_3 = (c ** 3 * (k + 1) * r ** 2) / (
         np.sqrt(1 - ((1 + k) * c ** 2 * r ** 2))
@@ -125,14 +128,14 @@ def d_z1a(x, y):
     """
     Normal vector of surface of lens 1 side A.
     """
-    c = 9.65674282E-3
+    c = 9.65674282e-3
     k = -30.00122787
-    a_1 = 1.45021174E-3
-    a_2 = 2.84858123E-6
-    a_3 = -5.02176737E-9
-    
-    x_temp = x/1e1
-    y_temp = y/1e1
+    a_1 = 1.45021174e-3
+    a_2 = 2.84858123e-6
+    a_3 = -5.02176737e-9
+
+    x_temp = x / 1e1
+    y_temp = y / 1e1
     r = np.sqrt(x_temp ** 2 + y_temp ** 2)
 
     coeff_1 = (a_1 * 2) + (a_2 * 4 * r ** 2) + (a_3 * 6 * r ** 4)
@@ -154,6 +157,7 @@ def m1a_into_tele(x, y, z):
     z_rot2 = y * np.sin(th1_l1) + z * np.cos(th1_l1)
     return x_rot2, y_rot2, z_rot2
 
+
 def m1b_into_tele(x, y, z):
 
     x_rot1 = x
@@ -174,23 +178,24 @@ def tele_into_m1b(x, y, z):
 
 def tele_into_m1a(x, y, z):
 
-    y -= (lens1_y + lens_t1)
+    y -= lens1_y + lens_t1
     x_temp = x
     y_temp = y * np.cos(-th1_l1) - z * np.sin(-th1_l1)
     z_temp = y * np.sin(-th1_l1) + z * np.cos(-th1_l1)
 
     return x_temp, y_temp, z_temp
 
+
 def z2a(x, y):
     """
     Surface shape of lens 2 side A.
     """
-    x_temp = x/1e1
-    y_temp = y/1e1
+    x_temp = x / 1e1
+    y_temp = y / 1e1
 
     r = np.sqrt(x_temp ** 2 + y_temp ** 2)
-    
-    c =  1.22111813e-02
+
+    c = 1.22111813e-02
     k = -30.00046667
     a_1 = 1.56460553e-03
     a_2 = 3.06349779e-06
@@ -201,46 +206,47 @@ def z2a(x, y):
     else:
         amp = (c * r ** 2) / (1 + np.sqrt(1 - (1 + k) * c ** 2 * r ** 2))
         amp += a_1 * r ** 2 + a_2 * r ** 4 + a_3 * r ** 6
-        
-    return amp*10
+
+    return amp * 10
+
 
 def z2b(x, y):
     """
     Surface shape of lens 2 side B.
     """
-    x_temp = x/1e1
-    y_temp = y/1e1
+    x_temp = x / 1e1
+    y_temp = y / 1e1
 
     r = np.sqrt(x_temp ** 2 + y_temp ** 2)
-    
-    c =   2.39616010e-02
+
+    c = 2.39616010e-02
     k = -1.04603079
     a_1 = -8.38235791e-03
     a_2 = -1.39048036e-06
-    a_3 =  1.84669164e-10
+    a_3 = 1.84669164e-10
 
     if 1 == 0:
         amp = 0
     else:
         amp = (c * r ** 2) / (1 + np.sqrt(1 - (1 + k) * c ** 2 * r ** 2))
         amp += a_1 * r ** 2 + a_2 * r ** 4 + a_3 * r ** 6
-        
-    return amp*10
+
+    return amp * 10
 
 
 def d_z2a(x, y):
-    
-    c =  1.22111813e-02
+
+    c = 1.22111813e-02
     k = -30.00046667
     a_1 = 1.56460553e-03
     a_2 = 3.06349779e-06
     a_3 = -5.00246955e-09
 
-    x_temp = x/1e1
-    y_temp = y/1e1
+    x_temp = x / 1e1
+    y_temp = y / 1e1
 
     r = np.sqrt(x_temp ** 2 + y_temp ** 2)
-    
+
     coeff_1 = (a_1 * 2) + (a_2 * 4 * r ** 2) + (a_3 * 6 * r ** 4)
     coeff_2 = (c * 2) / (1 + np.sqrt(1 - ((1 + k) * c ** 2 * r ** 2)))
     coeff_3 = (c ** 3 * (k + 1) * r ** 2) / (
@@ -253,18 +259,18 @@ def d_z2a(x, y):
 
 
 def d_z2b(x, y):
-    
-    c =   2.39616010e-02
+
+    c = 2.39616010e-02
     k = -1.04603079
     a_1 = -8.38235791e-03
     a_2 = -1.39048036e-06
-    a_3 =  1.84669164e-10
+    a_3 = 1.84669164e-10
 
-    x_temp = x/1e1
-    y_temp = y/1e1
+    x_temp = x / 1e1
+    y_temp = y / 1e1
 
     r = np.sqrt(x_temp ** 2 + y_temp ** 2)
-    
+
     coeff_1 = (a_1 * 2) + (a_2 * 4 * r ** 2) + (a_3 * 6 * r ** 4)
     coeff_2 = (c * 2) / (1 + np.sqrt(1 - ((1 + k) * c ** 2 * r ** 2)))
     coeff_3 = (c ** 3 * (k + 1) * r ** 2) / (
@@ -273,8 +279,9 @@ def d_z2b(x, y):
     )
     amp_x = x_temp * (coeff_1 + coeff_2 + coeff_3)
     amp_y = y_temp * (coeff_1 + coeff_2 + coeff_3)
-    
+
     return amp_x, amp_y
+
 
 def m2a_into_tele(x, y, z):
 
@@ -282,6 +289,7 @@ def m2a_into_tele(x, y, z):
     y_rot2 = (y * np.cos(th2_l2) - z * np.sin(th2_l2)) + (lens2_y + 4.9101e1)
     z_rot2 = y * np.sin(th2_l2) + z * np.cos(th2_l2)
     return x_rot2, y_rot2, z_rot2
+
 
 def m2b_into_tele(x, y, z):
 
@@ -301,7 +309,7 @@ def tele_into_m2b(x, y, z):
 
 
 def tele_into_m2a(x, y, z):
-    y -= (lens2_y + 4.9101e1)
+    y -= lens2_y + 4.9101e1
     x_temp = x
     y_temp = y * np.cos(-th2_l2) - z * np.sin(-th2_l2)
     z_temp = y * np.sin(-th2_l2) + z * np.cos(-th2_l2)
@@ -313,14 +321,14 @@ def z3a(x, y):
     """
     Surface shape of lens 3 side A.
     """
-    x_temp = x/1e1
-    y_temp = y/1e1
+    x_temp = x / 1e1
+    y_temp = y / 1e1
 
     c = -2.48540190e-02
     k = -30.00640716
-    a_1 =  4.05886709e-04
-    a_2 =  5.00081009e-06
-    a_3 =  5.00669812e-09
+    a_1 = 4.05886709e-04
+    a_2 = 5.00081009e-06
+    a_3 = 5.00669812e-09
 
     r = np.sqrt(x_temp ** 2 + y_temp ** 2)
     if 1 == 0:
@@ -328,15 +336,15 @@ def z3a(x, y):
     else:
         amp = (c * r ** 2) / (1 + np.sqrt(1 - ((1 + k) * c ** 2 * r ** 2)))
         amp += a_1 * r ** 2 + a_2 * r ** 4 + a_3 * r ** 6
-    return amp*10
+    return amp * 10
 
 
 def z3b(x, y):
     """
     Surface shape of lens 3 side B.
     """
-    x_temp = x/1e1
-    y_temp = y/1e1
+    x_temp = x / 1e1
+    y_temp = y / 1e1
 
     c = -2.50138371e-02
     k = -18.18966463
@@ -350,7 +358,7 @@ def z3b(x, y):
     else:
         amp = (c * r ** 2) / (1 + np.sqrt(1 - ((1 + k) * c ** 2 * r ** 2)))
         amp += a_1 * r ** 2 + a_2 * r ** 4 + a_3 * r ** 6
-    return amp*10
+    return amp * 10
 
 
 def filt(x, y):
@@ -366,15 +374,15 @@ def d_z3a(x, y):
     """
     c = -2.48540190e-02
     k = -30.00640716
-    a_1 =  4.05886709e-04
-    a_2 =  5.00081009e-06
-    a_3 =  5.00669812e-09
-    
-    x_temp = x/1e1
-    y_temp = y/1e1
+    a_1 = 4.05886709e-04
+    a_2 = 5.00081009e-06
+    a_3 = 5.00669812e-09
+
+    x_temp = x / 1e1
+    y_temp = y / 1e1
     r = np.sqrt(x_temp ** 2 + y_temp ** 2)
-    
-    coeff_1 = (a_1 * 2) + (a_2 * 4 * r ** 2) + (a_3 * 6 * r ** 4) 
+
+    coeff_1 = (a_1 * 2) + (a_2 * 4 * r ** 2) + (a_3 * 6 * r ** 4)
     coeff_2 = (c * 2) / (1 + np.sqrt(1 - ((1 + k) * c ** 2 * r ** 2)))
     coeff_3 = (c ** 3 * (k + 1) * r ** 2) / (
         np.sqrt(1 - ((1 + k) * c ** 2 * r ** 2))
@@ -390,8 +398,8 @@ def d_z3b(x, y):
     """
     Normal vector on surface of lens 3 side B.
     """
-    x_temp = x/1e1
-    y_temp = y/1e1
+    x_temp = x / 1e1
+    y_temp = y / 1e1
 
     c = -2.50138371e-02
     k = -18.18966463
@@ -400,7 +408,7 @@ def d_z3b(x, y):
     a_3 = 1.94511404e-09
 
     r = np.sqrt(x_temp ** 2 + y_temp ** 2)
-  
+
     coeff_1 = (a_1 * 2) + (a_2 * 4 * r ** 2) + (a_3 * 6 * r ** 4)
     coeff_2 = (c * 2) / (1 + np.sqrt(1 - ((1 + k) * c ** 2 * r ** 2)))
     coeff_3 = (c ** 3 * (k + 1) * r ** 2) / (
@@ -432,11 +440,12 @@ def m3b_into_tele(x, y, z):
     z_rot2 = y * np.sin(th2_l3) + z * np.cos(th2_l3)
     return x_rot2, y_rot2, z_rot2
 
+
 def tele_into_m3a(x, y, z):
     """
     Coordinate transformation from telescope to lens 3, side A.
     """
-    y -= (lens3_y + 3.1790e1)
+    y -= lens3_y + 3.1790e1
     x_temp = x
     y_temp = y * np.cos(-th1_l3) - z * np.sin(-th1_l3)
     z_temp = y * np.sin(-th1_l3) + z * np.cos(-th1_l3)
@@ -448,12 +457,13 @@ def tele_into_m3b(x, y, z):
     """
     Coordinate transformation from telescope to lens 3, side B.
     """
-    y -= (lens3_y)
+    y -= lens3_y
     x_temp = x
     y_temp = y * np.cos(-th2_l3) - z * np.sin(-th2_l3)
     z_temp = y * np.sin(-th2_l3) + z * np.cos(-th2_l3)
 
     return x_temp, y_temp, z_temp
+
 
 # def tele_into_f3(x, y, z):
 #     """
@@ -488,7 +498,6 @@ def tele_into_m3b(x, y, z):
 #     z_temp = y * np.sin(-th1_l3) + z * np.cos(-th1_l3)
 
 #     return x_temp, y_temp, z_temp
-
 
 
 # def z_lyot(x, y):
@@ -566,40 +575,41 @@ def plot_lenses():
         Zt1b[:, int(len(Yt1a) / 2)],
         "-",
         color="k",
-        label="1b"
+        label="1b",
     )
     plt.plot(
         Yt1a[:, int(len(Yt1a) / 2)],
         Zt1a[:, int(len(Yt1a) / 2)],
         "-",
         color="k",
-        label="1a"
-        )
+        label="1a",
+    )
     plt.plot(
         Yt2b[:, int(len(Yt2a) / 2)],
         Zt2b[:, int(len(Yt2a) / 2)],
         "-",
         color="k",
-        label="2b"
+        label="2b",
     )
     plt.plot(
         Yt2a[:, int(len(Yt2a) / 2)],
         Zt2a[:, int(len(Yt2a) / 2)],
         "-",
         color="k",
-        label="2a"
+        label="2a",
     )
     plt.plot(
         Yt3b[:, int(len(Yt3a) / 2)],
         Zt3b[:, int(len(Yt3a) / 2)],
         "-",
         color="k",
-        label="3b")
+        label="3b",
+    )
 
     plt.plot(
         Yt3a[:, int(len(Yt3a) / 2)],
         Zt3a[:, int(len(Yt3a) / 2)],
         "-",
         color="k",
-        label="3a")
-
+        label="3a",
+    )

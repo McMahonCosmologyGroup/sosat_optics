@@ -35,18 +35,16 @@ setup(
     description="Optical simulation of the Simons Observatory Small Aperture Telescope.",
     author="Grace E. Chesmore, UChicago Lab",
     author_email="chesmore@uchicago.edu",
-    package_dir={
-        "sosat_optics": "sosat_optics"},
+    package_dir={"sosat_optics": "sosat_optics"},
     packages=packages,
 )
 
 
 # Install requirements
-with pathlib.Path('requirements.txt').open() as requirements_txt:
+with pathlib.Path("requirements.txt").open() as requirements_txt:
     install_requires = [
         str(requirement)
-        for requirement
-        in pkg_resources.parse_requirements(requirements_txt)
+        for requirement in pkg_resources.parse_requirements(requirements_txt)
     ]
 
 setuptools.setup(

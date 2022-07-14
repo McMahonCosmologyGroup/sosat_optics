@@ -19,7 +19,7 @@ class SatGeo:
     lambda_ = (30.0 / 150.0) * 0.01  # [m]
     k = 2 * np.pi / lambda_
 
-    diam = 0.42 # diameter of window
+    diam = 0.42  # diameter of window
     x_ap = 0
     y_ap = 0
     z_ap = 0
@@ -40,8 +40,7 @@ lens_t3 = 3.1790e1
 
 lens3_y = (1.5 + 0.45 + 2.1553254002897502) * 1e1
 lens2_y = lens3_y + 10.676699903527055e1 + lens_t3
-lens1_y = lens2_y + 3.8933e1 + +0.45e1 + 0.5e1 + \
-    0.45e1 + 47.776194563951336e1 + lens_t2
+lens1_y = lens2_y + 3.8933e1 + +0.45e1 + 0.5e1 + 0.45e1 + 47.776194563951336e1 + lens_t2
 y_lyot = lens1_y + 1.0553506281444689e1 + lens_t1
 
 
@@ -88,6 +87,7 @@ def z1a(x, y):
         amp = (c * r ** 2) / (1 + np.sqrt(1 - ((1 + k) * c ** 2 * r ** 2)))
         amp += a_1 * r ** 2 + a_2 * r ** 4 + a_3 * r ** 6
     return amp * 10
+
 
 def d_z1b(x, y):
     """

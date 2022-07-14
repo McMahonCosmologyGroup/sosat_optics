@@ -3,42 +3,46 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def zero_pad(x_in,y_in,beam_in,pts):
-    x_int = abs(x_in[0,0]-x_in[0,1])
-    y_int = abs(y_in[0,0]-y_in[1,0])
-    beam_out = np.pad(beam_in, pts, mode='constant')
+def zero_pad(x_in, y_in, beam_in, pts):
+    x_int = abs(x_in[0, 0] - x_in[0, 1])
+    y_int = abs(y_in[0, 0] - y_in[1, 0])
+    beam_out = np.pad(beam_in, pts, mode="constant")
     x_new = np.array(np.arange(len(beam_out)))
     y_new = np.array(np.arange(len(beam_out)))
     x_new = x_new - np.mean(x_new)
     y_new = y_new - np.mean(y_new)
     x_new = x_new * x_int
     y_new = y_new * y_int
-    x_new,y_new = np.meshgrid(x_new,y_new)
-    return x_new,y_new,beam_out
+    x_new, y_new = np.meshgrid(x_new, y_new)
+    return x_new, y_new, beam_out
+
 
 def rad_to_arcmin(rads):
     """
     Convert radians to arcmins.
     """
-    return rads*180*60/np.pi
+    return rads * 180 * 60 / np.pi
+
 
 def ghz_to_m(freq_ghz):
     """
     Convert frequency [GHz] to wavelength [m].
     """
-    ff_hz = freq_ghz * 1e9 # frequency in [Hz]
-    wavelength = (3 * 10 ** 8) / ff_hz # wavelength in [m]
+    ff_hz = freq_ghz * 1e9  # frequency in [Hz]
+    wavelength = (3 * 10 ** 8) / ff_hz  # wavelength in [m]
     return wavelength
+
 
 def m_to_ghz(wavelength):
     """
     Convert wavelength [m] to frequency [GHz]s.
     """
-    ff_hz =  (3 * 10 ** 8) / wavelength
-    freq_ghz = ff_hz/1e9
+    ff_hz = (3 * 10 ** 8) / wavelength
+    freq_ghz = ff_hz / 1e9
     return freq_ghz
 
-def beam_convolve(x, y, beam, apert1, apert2,plots):
+
+def beam_convolve(x, y, beam, apert1, apert2, plots):
     """
     Convolve beam with square aperture (fields defined as disc).
     """
@@ -52,7 +56,7 @@ def beam_convolve(x, y, beam, apert1, apert2,plots):
         disc = np.cos(np.pi * x / apert1)
         disc = np.where(abs(x) <= apert1 / 2, disc, 0)
         disc = np.where(abs(y) <= apert2 / 2, disc, 0)
-    
+
     tmp = np.fft.fftshift(disc)
     tmp = np.fft.fft2(tmp)
     # Matrix G
@@ -68,92 +72,120 @@ def beam_convolve(x, y, beam, apert1, apert2,plots):
     tmp = np.fft.ifft2(tmp)
     beam_final = np.fft.ifftshift(tmp)
 
-    if plots==1:
-        plt.figure(figsize = (14,4))
+    if plots == 1:
+        plt.figure(figsize=(14, 4))
         plt.subplot(121)
         plt.title("WG Amp")
         plt.ylabel("cm")
         plt.xlabel("cm")
-        plt.pcolormesh(x,y,10*np.log10(abs(disc)/np.max(abs(disc))),vmin = -25,shading = 'auto')
-        plt.colorbar(label = 'dB')
+        plt.pcolormesh(
+            x, y, 10 * np.log10(abs(disc) / np.max(abs(disc))), vmin=-25, shading="auto"
+        )
+        plt.colorbar(label="dB")
         plt.axis("equal")
 
         plt.subplot(122)
         plt.title("WG Phase")
         plt.ylabel("cm")
         plt.xlabel("cm")
-        plt.pcolormesh(x,y,np.arctan2(np.imag(disc),np.real(disc)),shading = 'auto')
+        plt.pcolormesh(x, y, np.arctan2(np.imag(disc), np.real(disc)), shading="auto")
         plt.axis("equal")
-        plt.xlim(-2,2)
-        plt.ylim(-2,2)
+        plt.xlim(-2, 2)
+        plt.ylim(-2, 2)
         plt.colorbar()
-        plt.show()    
-        plt.figure(figsize = (14,4))
+        plt.show()
+        plt.figure(figsize=(14, 4))
         plt.subplot(121)
         plt.title("WG FFT Amp")
-        plt.pcolormesh(x,y,10*np.log10(abs(disc_fft)/np.max(abs(disc_fft))),vmin = -25,shading = 'auto')
-        plt.colorbar(label = 'dB')
+        plt.pcolormesh(
+            x,
+            y,
+            10 * np.log10(abs(disc_fft) / np.max(abs(disc_fft))),
+            vmin=-25,
+            shading="auto",
+        )
+        plt.colorbar(label="dB")
         plt.ylabel("cm")
         plt.xlabel("cm")
         plt.axis("equal")
         plt.subplot(122)
         plt.title("WG FFT Phase")
-        plt.pcolormesh(x,y,np.arctan2(np.imag(disc_fft),np.real(disc_fft)),shading = 'auto')
+        plt.pcolormesh(
+            x, y, np.arctan2(np.imag(disc_fft), np.real(disc_fft)), shading="auto"
+        )
         plt.colorbar()
         plt.ylabel("cm")
         plt.xlabel("cm")
         plt.axis("equal")
-        plt.show()        
-        plt.figure(figsize = (14,4))
+        plt.show()
+        plt.figure(figsize=(14, 4))
         plt.subplot(121)
         plt.title("Input Beam Amp")
-        plt.pcolormesh(x,y,10*np.log10(abs(beam)/np.max(abs(beam))),vmin = -25,shading = 'auto')
-        plt.colorbar(label = 'dB')
+        plt.pcolormesh(
+            x, y, 10 * np.log10(abs(beam) / np.max(abs(beam))), vmin=-25, shading="auto"
+        )
+        plt.colorbar(label="dB")
         plt.ylabel("cm")
         plt.xlabel("cm")
         plt.axis("equal")
         plt.subplot(122)
         plt.title("Input Beam Phase")
-        plt.pcolormesh(x,y,np.arctan2(np.imag(beam),np.real(beam)),shading = 'auto')
+        plt.pcolormesh(x, y, np.arctan2(np.imag(beam), np.real(beam)), shading="auto")
         plt.colorbar()
         plt.ylabel("cm")
         plt.xlabel("cm")
         plt.axis("equal")
-        plt.show() 
+        plt.show()
 
-        plt.figure(figsize = (14,4))
+        plt.figure(figsize=(14, 4))
         plt.subplot(121)
         plt.title("Input Beam FFT Amp")
-        plt.pcolormesh(x,y,10*np.log10(abs(beam_fft)/np.max(abs(beam_fft))),vmin = -25,shading = 'auto')
-        plt.colorbar(label = 'dB')
+        plt.pcolormesh(
+            x,
+            y,
+            10 * np.log10(abs(beam_fft) / np.max(abs(beam_fft))),
+            vmin=-25,
+            shading="auto",
+        )
+        plt.colorbar(label="dB")
         plt.ylabel("cm")
         plt.xlabel("cm")
         plt.axis("equal")
         plt.subplot(122)
         plt.title("Input Beam FFT Phase")
-        plt.pcolormesh(x,y,np.arctan2(np.imag(beam_fft),np.real(beam_fft)),shading = 'auto')
+        plt.pcolormesh(
+            x, y, np.arctan2(np.imag(beam_fft), np.real(beam_fft)), shading="auto"
+        )
         plt.colorbar()
         plt.ylabel("cm")
         plt.xlabel("cm")
         plt.axis("equal")
-        plt.show()        
+        plt.show()
 
-        plt.figure(figsize = (14,4))
+        plt.figure(figsize=(14, 4))
         plt.subplot(121)
         plt.title("Input Beam FFT x WG FFT Amp")
-        plt.pcolormesh(x,y,10*np.log10(abs(beam_conv)/np.max(abs(beam_conv))),vmin = -25,shading = 'auto')
-        plt.colorbar(label = 'dB')
+        plt.pcolormesh(
+            x,
+            y,
+            10 * np.log10(abs(beam_conv) / np.max(abs(beam_conv))),
+            vmin=-25,
+            shading="auto",
+        )
+        plt.colorbar(label="dB")
         plt.ylabel("cm")
         plt.xlabel("cm")
         plt.axis("equal")
         plt.subplot(122)
         plt.title("Input Beam FFT x WG FFT Phase")
-        plt.pcolormesh(x,y,np.arctan2(np.imag(beam_conv),np.real(beam_conv)),shading = 'auto')
+        plt.pcolormesh(
+            x, y, np.arctan2(np.imag(beam_conv), np.real(beam_conv)), shading="auto"
+        )
         plt.colorbar()
         plt.ylabel("cm")
         plt.xlabel("cm")
         plt.axis("equal")
-        plt.show()   
+        plt.show()
 
     return x, y, beam_final
 
@@ -228,10 +260,10 @@ def coords_spat_to_ang(x, y, freq):
     """
     Coordinate transformation from spatial to angular.
     """
-    ff_ghz = freq * 1e9 # frequency in [Hz]
+    ff_ghz = freq * 1e9  # frequency in [Hz]
     # Get spatial coordinates
-    lam = (3 * 10 ** 8) / ff_ghz # wavelength in [m]
-    
+    lam = (3 * 10 ** 8) / ff_ghz  # wavelength in [m]
+
     # Resolution in aperture plane [m]
     delta_x = abs(np.max(x) - np.min(x)) / (len(x) - 1)  # increment in x
     delta_y = abs(np.max(y) - np.min(y)) / (len(y) - 1)  # increment in y
@@ -246,17 +278,7 @@ def coords_spat_to_ang(x, y, freq):
     delta_th = alpha / x_len
     delta_ph = beta / y_len
 
-    x_ang = (
-        np.linspace(
-            -int((len(x) / 2)), int((len(x) / 2)), int((len(x)))
-        )
-        * delta_th
-    )
-    y_ang = (
-        np.linspace(
-            -int((len(x) / 2)), int((len(x) / 2)), int((len(x)))
-        )
-        * delta_ph
-    )
+    x_ang = np.linspace(-int((len(x) / 2)), int((len(x) / 2)), int((len(x)))) * delta_th
+    y_ang = np.linspace(-int((len(x) / 2)), int((len(x) / 2)), int((len(x)))) * delta_ph
     x_ang, y_ang = np.meshgrid(x_ang, y_ang)
     return x_ang, y_ang
