@@ -27,7 +27,7 @@ from distutils.core import setup
 #     return arr
 
 
-# packages = build_packages("sosat_optics/", "sosat_optics")
+packages = build_packages("sosat-optics/", "sosat_optics")
 
 # setup(
 #     name="sosat_optics",
@@ -78,7 +78,7 @@ setup(name = 'sosat_optics',
       author_email = 'katie.megan.harrington@gmail.com',
       license = 'MIT',
       packages = ['sosat_optics'],
-      package_dir = {'sosat_optics':'sosat-optics'},
+      package_dir = {'sosat_optics':'sosat_optics'},
       cmdclass={'clean':CleanCommand,},
       #scripts = []
       )
