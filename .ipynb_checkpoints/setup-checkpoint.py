@@ -89,7 +89,7 @@ setup(
     description="Software for data acquisition of the holography setup.",
     author="Grace E. Chesmore, UChicago Lab",
     author_email="chesmore@uchicago.edu",
-    package_dir={"sosat_optics": "sosat-optics"},
+    package_dir={"sosat_optics": "sosat_optics"},
     packages=packages
 )
 
