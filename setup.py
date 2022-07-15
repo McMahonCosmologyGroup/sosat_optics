@@ -50,7 +50,3 @@ with pathlib.Path("requirements.txt").open() as requirements_txt:
 setuptools.setup(
     install_requires=install_requires,
 )
-
-# Trick to installing on Field computer:
-# /opt/anaconda3/bin/pip3 install Desktop/test_package/holog_daq/
-# /opt/anaconda3/bin/pip3 uninstall holog_daq
