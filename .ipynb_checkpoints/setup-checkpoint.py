@@ -27,7 +27,7 @@ def build_packages(base_dir, name_base):
     return arr
 
 
-packages = build_packages("holog_daq/", "holog_daq")
+packages = build_packages("sosat_optics/", "sosat_optics")
 
 setup(
     name="sosat_optics",
