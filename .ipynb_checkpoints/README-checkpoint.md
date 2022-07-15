@@ -12,7 +12,7 @@ Author: Grace Chesmore
 ## Installation Instructions:
 
 1. `git clone git@github.com:McMahonCosmologyGroup/sosat-optics.git`
-2. `cd sosat_optics/`
+2. `cd sosat-optics/`
 3. `python3 setup.py install --user`
 
 ## Contributions
