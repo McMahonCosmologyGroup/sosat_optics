@@ -6,9 +6,9 @@ Optical simulation of the Simons Observatory Small Aperture Telescope. <br />
 Author: Grace Chesmore
 
 ## Installation
-- git clone <repo>
-- cd package
-- pip3 install .
+- ```git clone git@github.com:McMahonCosmologyGroup/sosat_optics.git```
+- ```cd package```
+- ```pip3 install .```
 
 ## Contributions
 If you have write access to this repository, please:
