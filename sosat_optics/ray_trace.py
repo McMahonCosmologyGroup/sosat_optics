@@ -1,9 +1,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from sosat_optics import ot_geo
-from sosat_optics.ot_geo import *
 # from ot_geo import *
 from scipy import optimize
+
+from sosat_optics import ot_geo
+from sosat_optics.ot_geo import *
 
 
 def snell_vec(n1, n2, N_surf, s1):

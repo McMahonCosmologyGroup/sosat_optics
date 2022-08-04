@@ -1,6 +1,7 @@
 import os
 import pathlib
 from distutils.core import setup
+
 import pkg_resources
 import setuptools
 
@@ -25,6 +26,7 @@ def build_packages(base_dir, name_base):
                 [arr.append(rec) for rec in recursion]
     return arr
 
+
 packages = build_packages("sosat_optics/", "sosat_optics")
 
 setup(
@@ -33,6 +35,6 @@ setup(
     description="Optical simulation of the Simons Observatory Small Aperture Telescope.",
     author="Grace E. Chesmore, UChicago Lab",
     author_email="chesmore@uchicago.edu",
-    packages = ['sosat_optics'],
-    package_dir = {'sosat_optics':'sosat_optics'},
+    packages=["sosat_optics"],
+    package_dir={"sosat_optics": "sosat_optics"},
 )
