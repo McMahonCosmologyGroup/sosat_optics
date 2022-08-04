@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import ot_geo
-from ot_geo import *
+from sosat_optics import ot_geo
+from sosat_optics.ot_geo import *
+# from ot_geo import *
 from scipy import optimize
 
 
