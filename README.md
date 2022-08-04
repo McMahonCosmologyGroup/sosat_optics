@@ -7,7 +7,7 @@ Author: Grace Chesmore
 
 ## Installation
 - ```git clone git@github.com:McMahonCosmologyGroup/sosat_optics.git```
-- ```cd package```
+- ```cd sosat_optics```
 - ```pip3 install .```
 
 ## Contributions
