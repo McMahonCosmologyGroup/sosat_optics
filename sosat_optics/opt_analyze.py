@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def zero_pad(x_in, y_in, beam_in, pts):
+def zero_pad_OLD(x_in, y_in, beam_in, pts):
     x_int = abs(x_in[0, 0] - x_in[0, 1])
     y_int = abs(y_in[0, 0] - y_in[1, 0])
     beam_out = np.pad(beam_in, pts, mode="constant")
@@ -16,6 +16,19 @@ def zero_pad(x_in, y_in, beam_in, pts):
     x_new, y_new = np.meshgrid(x_new, y_new)
     return x_new, y_new, beam_out
 
+def zero_pad(x_in, y_in, beam_in, pts):
+    x_int = abs(x_in[0, 0] - x_in[1, 1])
+    y_int = abs(y_in[0, 0] - y_in[1, 1])
+    beam_out = np.pad(beam_in, pts, mode="constant")
+    x_new = np.array(np.arange(len(beam_out)))
+    y_new = np.array(np.arange(len(beam_out)))
+    x_new = x_new * x_int
+    y_new = y_new * y_int
+    x_new -= np.mean(x_new)
+    y_new -= np.mean(y_new)
+    x_new, y_new = np.meshgrid(x_new, y_new)
+    beam_out = np.where(np.isnan(beam_out)==True, 0, beam_out)
+    return x_new + np.mean(x_in), y_new + np.mean(y_in), beam_out.T
 
 def rad_to_arcmin(rads):
     """

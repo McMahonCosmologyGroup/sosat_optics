@@ -17,7 +17,6 @@ def snell_vec(n1, n2, N_surf, s1):
 
     return s2
 
-
 def aperature_fields(P_rx, tele_geo, plot, col):
     alph = 0.05  # transparency of plotted lines
 
@@ -1032,21 +1031,21 @@ def rx_to_lyot_OLD(P_rx, tele_geo, plot, col):
     pbar.close()
     # return out
 
-    len_sim = int(np.sqrt(len(out[0])))
-    x_sim = np.reshape(out[0], (len_sim, len_sim))  # [mm]
-    y_sim = np.reshape(out[2], (len_sim, len_sim))  # [mm]
+    # len_sim = int(np.sqrt(len(out[0])))
+    # x_sim = np.reshape(out[0], (len_sim, len_sim))  # [mm]
+    # y_sim = np.reshape(out[2], (len_sim, len_sim))  # [mm]
 
-    indx_x = np.where((np.isnan(x_sim) == False) & (abs(x_sim) <= 250))
-    indx_y = np.where((np.isnan(y_sim) == False) & (abs(y_sim) <= 250))
+    # indx_x = np.where((np.isnan(x_sim) == False) & (abs(x_sim) <= 250))
+    # indx_y = np.where((np.isnan(y_sim) == False) & (abs(y_sim) <= 250))
 
-    x_sim_new = np.linspace(np.min(x_sim[indx_x]), np.max(x_sim[indx_x]), len_sim)
-    y_sim_new = np.linspace(np.min(y_sim[indx_y]), np.max(y_sim[indx_y]), len_sim)
-    x_sim, y_sim = np.meshgrid(x_sim_new, y_sim_new)
+    # x_sim_new = np.linspace(np.min(x_sim[indx_x]), np.max(x_sim[indx_x]), len_sim)
+    # y_sim_new = np.linspace(np.min(y_sim[indx_y]), np.max(y_sim[indx_y]), len_sim)
+    # x_sim, y_sim = np.meshgrid(x_sim_new, y_sim_new)
 
-    a_sim = np.reshape(out[4], (len_sim, len_sim))
-    p_sim = np.reshape(out[3], (len_sim, len_sim))
+    # a_sim = np.reshape(out[4], (len_sim, len_sim))
+    # p_sim = np.reshape(out[3], (len_sim, len_sim))
 
-    return x_sim, y_sim, a_sim, p_sim
+    return out #x_sim, y_sim, a_sim, p_sim
 
 def rx_to_lyot(P_rx, tele_geo, plot, col):
 
