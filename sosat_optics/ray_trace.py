@@ -4,6 +4,7 @@ import numpy as np
 # from ot_geo import *
 from scipy import optimize
 from tqdm import tqdm
+
 from sosat_optics import ot_geo
 from sosat_optics.ot_geo import *
 
@@ -18,9 +19,10 @@ matplotlib.rcParams.update(
     }
 )
 
-red = '#e42536'
-blue = '#570efc'
-orange = '#f89c20'
+red = "#e42536"
+blue = "#570efc"
+orange = "#f89c20"
+
 
 def snell_vec(n1, n2, N_surf, s1):
     # s1 is the incoming vector, pointing from the light source to the surface
@@ -31,6 +33,7 @@ def snell_vec(n1, n2, N_surf, s1):
     )
 
     return s2
+
 
 def aperature_fields(P_rx, tele_geo, plot, col):
     alph = 0.05  # transparency of plotted lines
@@ -523,6 +526,7 @@ def aperature_fields(P_rx, tele_geo, plot, col):
         out[9, ii] = tan_og_t[1]
         out[10, ii] = tan_og_t[2]
     return out
+
 
 def rx_to_lyot_OLD(P_rx, tele_geo, plot, col):
 
@@ -1060,7 +1064,8 @@ def rx_to_lyot_OLD(P_rx, tele_geo, plot, col):
     # a_sim = np.reshape(out[4], (len_sim, len_sim))
     # p_sim = np.reshape(out[3], (len_sim, len_sim))
 
-    return out #x_sim, y_sim, a_sim, p_sim
+    return out  # x_sim, y_sim, a_sim, p_sim
+
 
 def rx_to_lyot(P_rx, tele_geo, plot, col):
 
@@ -1583,7 +1588,8 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
     pbar.close()
     return out
 
-def getNearField(tele_geo, rx,plot=False):
+
+def getNearField(tele_geo, rx, plot=False):
     """Get the near field of a receiver feed."""
     # get the ray trace
     out = rx_to_lyot(rx, tele_geo, plot, "b")
@@ -1591,10 +1597,10 @@ def getNearField(tele_geo, rx,plot=False):
     xx = np.where(out[4] != 0)
     a_sim = out[4][xx]
     p_sim = np.mod(tele_geo.k * (out[3][xx] - np.mean(out[3][xx])) / 1e3 / 2, 2 * np.pi)
-    x_sim = out[0][xx]/1e1
-    y_sim = out[2][xx]/1e1
+    x_sim = out[0][xx] / 1e1
+    y_sim = out[2][xx] / 1e1
 
-    class SimOutput():
+    class SimOutput:
         def __init__(self, x_sim, y_sim, a_sim, p_sim):
             self.a_sim = a_sim
             self.p_sim = p_sim
@@ -1602,41 +1608,56 @@ def getNearField(tele_geo, rx,plot=False):
             self.y_sim = y_sim
             beam_cent = None
 
-    return SimOutput(x_sim, y_sim,a_sim, p_sim - np.mean(p_sim))
+    return SimOutput(x_sim, y_sim, a_sim, p_sim - np.mean(p_sim))
+
 
 def plotSimFields(sb, tele_geo):
-    fig,ax = plt.subplots(1,2,figsize=(12, 5),sharey=True)
+    fig, ax = plt.subplots(1, 2, figsize=(12, 5), sharey=True)
     ax[1].set_title("Phase")
     cols = ax[1].scatter(sb.x_sim, sb.y_sim, s=5, c=sb.p_sim)
     ax[1].set_aspect("equal")
     ax[1].set_xlim(-40, 40)
     ax[1].set_ylim(-40, 40)
     ax[1].set_xlabel("x (cm)")
-    plt.colorbar(cols,ax =ax[1],label = "[rad]")
+    plt.colorbar(cols, ax=ax[1], label="[rad]")
     ax[1].grid()
 
     ax[0].set_title("Power")
-    ax[0].plot(0,0,'o',color = red)
-    cols = ax[0].scatter(sb.x_sim,sb.y_sim, s=2, c=20*np.log10(sb.a_sim/np.max(sb.a_sim)),vmax=0,vmin=-10)
+    ax[0].plot(0, 0, "o", color=red)
+    cols = ax[0].scatter(
+        sb.x_sim,
+        sb.y_sim,
+        s=2,
+        c=20 * np.log10(sb.a_sim / np.max(sb.a_sim)),
+        vmax=0,
+        vmin=-10,
+    )
     ax[0].set_aspect("equal")
     ax[0].set_xlim(-40, 40)
     ax[0].set_ylim(-40, 40)
     ax[0].set_xlabel("x (cm)")
     ax[0].set_ylabel("y (cm)")
     ax[0].grid()
-    plt.colorbar(cols,ax =ax[0],label = "dB")
+    plt.colorbar(cols, ax=ax[0], label="dB")
     plt.show()
+
 
 def get_sim(sb):
     return sb.a_sim, sb.p_sim, sb.x_sim, sb.y_sim
+
 
 def get_beam_cent(sb):
     beam_cent = [np.mean(sb.x_sim), np.mean(sb.y_sim)]
     return beam_cent
 
+
 def get_fwhm(sb):
     a_sim, p_sim, x_sim, y_sim = get_sim(sb)
     beam_cent = get_beam_cent(sb)
-    fwhm_nf_x = abs(y_sim-beam_cent[1])[np.where(a_sim**2 > np.max(a_sim**2)/2)].max()
-    fwhm_nf_y = abs(x_sim-beam_cent[0])[np.where(a_sim**2 > np.max(a_sim**2)/2)].max()
+    fwhm_nf_x = abs(y_sim - beam_cent[1])[
+        np.where(a_sim ** 2 > np.max(a_sim ** 2) / 2)
+    ].max()
+    fwhm_nf_y = abs(x_sim - beam_cent[0])[
+        np.where(a_sim ** 2 > np.max(a_sim ** 2) / 2)
+    ].max()
     return fwhm_nf_x, fwhm_nf_y
