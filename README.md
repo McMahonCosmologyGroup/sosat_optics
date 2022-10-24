@@ -18,7 +18,9 @@ This [notebook](https://github.com/McMahonCosmologyGroup/sosat_optics/blob/main/
 ### Far Field
 This [notebook](https://github.com/McMahonCosmologyGroup/sosat_optics/blob/main/notebooks/sat_farfield.ipynb) demonstrates the use of the optical simulation to propagate the near field simulated beam into the far field of the telescope. <br />
 With the simulated near-fields $b(x,y)$ above the SAT window, the far-field $B(\theta,\phi)$ is calculated using the relation:
+
 $$ B(\theta,\phi) = \int_{aperture} b(x,y)e^{i2\pi(x\theta + y\phi)} dx dy$$
+
 integrating over the area of aperture, which is the Stop of the SAT.
 
 ## Contributions
