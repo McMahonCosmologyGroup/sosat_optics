@@ -1593,12 +1593,21 @@ def getNearField(tele_geo, rx,plot=False):
     p_sim = np.mod(tele_geo.k * (out[3][xx] - np.mean(out[3][xx])) / 1e3 / 2, 2 * np.pi)
     x_sim = out[0][xx]/1e1
     y_sim = out[2][xx]/1e1
-    return a_sim, p_sim - np.mean(p_sim), x_sim, y_sim
 
-def plotSimFields(x_sim, y_sim, a_sim, p_sim, tele_geo):
+    class SimOutput():
+        def __init__(self, x_sim, y_sim, a_sim, p_sim):
+            self.a_sim = a_sim
+            self.p_sim = p_sim
+            self.x_sim = x_sim
+            self.y_sim = y_sim
+            beam_cent = None
+
+    return SimOutput(x_sim, y_sim,a_sim, p_sim - np.mean(p_sim))
+
+def plotSimFields(sb, tele_geo):
     fig,ax = plt.subplots(1,2,figsize=(12, 5),sharey=True)
     ax[1].set_title("Phase")
-    cols = ax[1].scatter(x_sim, y_sim, s=5, c=p_sim)
+    cols = ax[1].scatter(sb.x_sim, sb.y_sim, s=5, c=sb.p_sim)
     ax[1].set_aspect("equal")
     ax[1].set_xlim(-40, 40)
     ax[1].set_ylim(-40, 40)
@@ -1608,7 +1617,7 @@ def plotSimFields(x_sim, y_sim, a_sim, p_sim, tele_geo):
 
     ax[0].set_title("Power")
     ax[0].plot(0,0,'o',color = red)
-    cols = ax[0].scatter(x_sim,y_sim, s=2, c=20*np.log10(a_sim/np.max(a_sim)),vmax=0,vmin=-10)
+    cols = ax[0].scatter(sb.x_sim,sb.y_sim, s=2, c=20*np.log10(sb.a_sim/np.max(sb.a_sim)),vmax=0,vmin=-10)
     ax[0].set_aspect("equal")
     ax[0].set_xlim(-40, 40)
     ax[0].set_ylim(-40, 40)
@@ -1617,3 +1626,17 @@ def plotSimFields(x_sim, y_sim, a_sim, p_sim, tele_geo):
     ax[0].grid()
     plt.colorbar(cols,ax =ax[0],label = "dB")
     plt.show()
+
+def get_sim(sb):
+    return sb.a_sim, sb.p_sim, sb.x_sim, sb.y_sim
+
+def get_beam_cent(sb):
+    beam_cent = [np.mean(sb.x_sim), np.mean(sb.y_sim)]
+    return beam_cent
+
+def get_fwhm(sb):
+    a_sim, p_sim, x_sim, y_sim = get_sim(sb)
+    beam_cent = get_beam_cent(sb)
+    fwhm_nf_x = abs(y_sim-beam_cent[1])[np.where(a_sim**2 > np.max(a_sim**2)/2)].max()
+    fwhm_nf_y = abs(x_sim-beam_cent[0])[np.where(a_sim**2 > np.max(a_sim**2)/2)].max()
+    return fwhm_nf_x, fwhm_nf_y
