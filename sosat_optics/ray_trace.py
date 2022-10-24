@@ -1599,16 +1599,17 @@ def getNearField(tele_geo, rx, plot=False):
     p_sim = np.mod(tele_geo.k * (out[3][xx] - np.mean(out[3][xx])) / 1e3 / 2, 2 * np.pi)
     x_sim = out[0][xx] / 1e1
     y_sim = out[2][xx] / 1e1
+    tan_og = np.array([np.mean(out[8][xx]), np.mean(out[9][xx]), np.mean(out[10][xx])])
 
     class SimOutput:
-        def __init__(self, x_sim, y_sim, a_sim, p_sim):
+        def __init__(self, x_sim, y_sim, a_sim, p_sim, tan_og):
             self.a_sim = a_sim
             self.p_sim = p_sim
             self.x_sim = x_sim
             self.y_sim = y_sim
-            beam_cent = None
+            self.tan_og = tan_og
 
-    return SimOutput(x_sim, y_sim, a_sim, p_sim - np.mean(p_sim))
+    return SimOutput(x_sim, y_sim, a_sim, p_sim - np.mean(p_sim), tan_og)
 
 
 def plotSimFields(sb, tele_geo):
@@ -1661,3 +1662,8 @@ def get_fwhm(sb):
         np.where(a_sim ** 2 > np.max(a_sim ** 2) / 2)
     ].max()
     return fwhm_nf_x, fwhm_nf_y
+
+def get_angle_out(sb):
+    theta_x = abs(90-np.rad2deg(np.arctan2(sb.tan_og[1],sb.tan_og[2])))
+    theta_y = abs(90-np.rad2deg(np.arctan2(sb.tan_og[1],sb.tan_og[0])))
+    return [theta_x,theta_y]
