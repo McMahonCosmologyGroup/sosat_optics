@@ -10,6 +10,14 @@ Author: Grace Chesmore
 - ```cd sosat_optics```
 - ```pip3 install .```
 
+## Usage
+Two notebooks are provided to demonstrate the use of the optical simulation. <br />
+### Near Field
+This [notebook](https://github.com/McMahonCosmologyGroup/sosat_optics/blob/main/notebooks/sat_nearfield.ipynb) demonstrates the use of the optical simulation to create the near-fields in front of the SAT window. <br />
+
+### Far Field
+This [notebook](https://github.com/McMahonCosmologyGroup/sosat_optics/blob/main/notebooks/sat_farfield.ipynb) demonstrates the use of the optical simulation to propagate the near field simulated beam into the far field of the telescope. <br />
+
 ## Contributions
 If you have write access to this repository, please:
 * create a new branch
