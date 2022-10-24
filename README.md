@@ -16,12 +16,14 @@ Two notebooks are provided to demonstrate the use of the optical simulation. <br
 This [notebook](https://github.com/McMahonCosmologyGroup/sosat_optics/blob/main/notebooks/sat_nearfield.ipynb) demonstrates the use of the optical simulation to create the near-fields in front of the SAT window. <br />
 
 ### Far Field
-This [notebook](https://github.com/McMahonCosmologyGroup/sosat_optics/blob/main/notebooks/sat_farfield.ipynb) demonstrates the use of the optical simulation to propagate the near field simulated beam into the far field of the telescope. <br />
-With the simulated near-fields $b(x,y)$ above the SAT window, the far-field $B(\theta,\phi)$ is calculated using the relation:
+This [notebook](https://github.com/McMahonCosmologyGroup/sosat_optics/blob/main/notebooks/sat_farfield.ipynb) demonstrates the use of the optical simulation to propagate the near field simulated beam into the far field of the telescope.<br />
+With the simulated near-fields $b(x,y)$ above the SAT window, the far-field $B(\theta_x,\theta_y)$ is calculated using the relation:
 
-$$ B(\theta,\phi) = \int_{aperture} b(x,y)e^{i2\pi(x\theta + y\phi)} dx dy$$
+$$ B(\theta_x,\theta_y) = \int_{aperture} b(x,y)e^{i2\pi(x\theta_x + y\theta_y)} dx dy$$
 
-integrating over the area of aperture, which is the Stop of the SAT.
+where $\theta_x$ and $\theta_y$ are the polar coordinates of the far-field, $x$ and $y$ are the coordinates of the near-field, and $b(x,y)$ is the measured near-field.  Here, we are integrating over the area of aperture, which is the Stop of the SAT.
+
+It is important to note that in practice, one can only obtain the far-field beams from a near-field measurement if the near-field data includes phase information.
 
 ## Contributions
 If you have write access to this repository, please:
