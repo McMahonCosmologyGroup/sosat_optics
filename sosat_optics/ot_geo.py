@@ -13,7 +13,9 @@ class SatGeo:
     n_si = 3.416
     n_vac = 1.0
 
-    th_fwhp = 35 * np.pi / 180
+    th_fwhp_x = np.deg2rad(35)
+    th_fwhp_y = np.deg2rad(35)
+    
     n_scan = 100
 
     lambda_ = (30.0 / 150.0) * 0.01  # [m]

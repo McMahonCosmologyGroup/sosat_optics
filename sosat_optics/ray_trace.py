@@ -1074,7 +1074,9 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
 
     alph = 0.05  # transparency of plotted lines
 
-    horn_fwhp = tele_geo.th_fwhp
+    horn_fwhp_x = tele_geo.th_fwhp_x
+    horn_fwhp_y = tele_geo.th_fwhp_y
+
     n_vac = tele_geo.n_vac
     n_si = tele_geo.n_si
 
@@ -1570,8 +1572,8 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
             out[3, ii] = total_path_length
             out[4, ii] = np.exp(
                 (-0.5)
-                * (de_ho ** 2 + de_ve ** 2)
-                / (horn_fwhp / (np.sqrt(8 * np.log(2)))) ** 2
+                * ( (de_ho/horn_fwhp_x) ** 2 + (de_ve/horn_fwhp_y) ** 2)
+                / (1 / (np.sqrt(8 * np.log(2)))) ** 2
             )
         else:
             out[3, ii] = 0
