@@ -12,8 +12,11 @@ Author: Grace Chesmore
 
 ## Usage
 Two notebooks are provided to demonstrate the use of the optical simulation. <br />
+
 ### Near Field
 This [notebook](https://github.com/McMahonCosmologyGroup/sosat_optics/blob/main/notebooks/sat_nearfield.ipynb) demonstrates the use of the optical simulation to create the near-fields in front of the SAT window. <br />
+### Near Field Requirements
+An additional notebook is provided to calculate the predicted near-field beam sizes across the mid-frequency band of the SAT. This can easily be adapted to change the source wavelength, source height from the window, and receiver position, though here we keep the receiver position at boresight in the focal plane. <br />
 
 ### Far Field
 This [notebook](https://github.com/McMahonCosmologyGroup/sosat_optics/blob/main/notebooks/sat_farfield.ipynb) demonstrates the use of the optical simulation to propagate the near field simulated beam into the far field of the telescope.  With the simulated near-fields $b(x,y)$ above the SAT window, the far-field $B(\theta_x,\theta_y)$ is calculated using the relation:
