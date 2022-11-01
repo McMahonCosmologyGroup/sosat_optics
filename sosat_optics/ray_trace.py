@@ -2,9 +2,9 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 # from ot_geo import *
-from scipy import optimize
+from scipy import interpolate, optimize
 from tqdm import tqdm
-from scipy import interpolate
+
 from sosat_optics import ot_geo
 from sosat_optics.ot_geo import *
 
@@ -1572,7 +1572,7 @@ def rx_to_lyot(P_rx, tele_geo, plot, col):
             out[3, ii] = total_path_length
             out[4, ii] = np.exp(
                 (-0.5)
-                * ( (de_ho/horn_fwhp_x) ** 2 + (de_ve/horn_fwhp_y) ** 2)
+                * ((de_ho / horn_fwhp_x) ** 2 + (de_ve / horn_fwhp_y) ** 2)
                 / (1 / (np.sqrt(8 * np.log(2)))) ** 2
             )
         else:
@@ -1665,10 +1665,12 @@ def get_fwhm(sb):
     ].max()
     return fwhm_nf_x, fwhm_nf_y
 
+
 def get_angle_out(sb):
-    theta_x = abs(90-np.rad2deg(np.arctan2(sb.tan_og[1],sb.tan_og[2])))
-    theta_y = abs(90-np.rad2deg(np.arctan2(sb.tan_og[1],sb.tan_og[0])))
-    return [theta_x,theta_y]
+    theta_x = abs(90 - np.rad2deg(np.arctan2(sb.tan_og[1], sb.tan_og[2])))
+    theta_y = abs(90 - np.rad2deg(np.arctan2(sb.tan_og[1], sb.tan_og[0])))
+    return [theta_x, theta_y]
+
 
 def sim2d(sb):
 
@@ -1676,17 +1678,33 @@ def sim2d(sb):
     y_sim = sb.y_sim  # [cm]
 
     beam_cent = get_beam_cent(sb)
-    indx_xy = np.where((np.isnan(x_sim) == False) & (np.isnan(y_sim) == False) & ((x_sim - beam_cent[0])**2 + (y_sim - beam_cent[1])**2 <= 21.0**2))
-    grid_x, grid_y = np.mgrid[np.min(x_sim[indx_xy]):np.max(x_sim[indx_xy]):100j, np.min(y_sim[indx_xy]):np.max(y_sim[indx_xy]):100j]
+    indx_xy = np.where(
+        (np.isnan(x_sim) == False)
+        & (np.isnan(y_sim) == False)
+        & ((x_sim - beam_cent[0]) ** 2 + (y_sim - beam_cent[1]) ** 2 <= 21.0 ** 2)
+    )
+    grid_x, grid_y = np.mgrid[
+        np.min(x_sim[indx_xy]) : np.max(x_sim[indx_xy]) : 100j,
+        np.min(y_sim[indx_xy]) : np.max(y_sim[indx_xy]) : 100j,
+    ]
     points = np.array([x_sim[indx_xy], y_sim[indx_xy]]).T
     values = np.array(sb.p_sim[indx_xy]).T
     from scipy.interpolate import griddata
-    grid_z2 = griddata(points, values, (grid_x, grid_y), method='cubic')
-    grid_z2 = np.where(((grid_x - (beam_cent[0]))**2 + (grid_y - (beam_cent[1]))**2 >= 20**2), 0, grid_z2)
+
+    grid_z2 = griddata(points, values, (grid_x, grid_y), method="cubic")
+    grid_z2 = np.where(
+        ((grid_x - (beam_cent[0])) ** 2 + (grid_y - (beam_cent[1])) ** 2 >= 20 ** 2),
+        0,
+        grid_z2,
+    )
     grid_z2 = np.where(np.isnan(grid_z2), 0, grid_z2)
-    values = np.array(sb.a_sim[indx_xy]).T 
-    grid_amp = griddata(points, values, (grid_x, grid_y), method='cubic')
-    grid_amp = np.where(((grid_x - (beam_cent[0]))**2 + (grid_y - (beam_cent[1]))**2 >= 20**2), 0, grid_amp)
+    values = np.array(sb.a_sim[indx_xy]).T
+    grid_amp = griddata(points, values, (grid_x, grid_y), method="cubic")
+    grid_amp = np.where(
+        ((grid_x - (beam_cent[0])) ** 2 + (grid_y - (beam_cent[1])) ** 2 >= 20 ** 2),
+        0,
+        grid_amp,
+    )
     grid_amp = np.where(np.isnan(grid_amp), 0, grid_amp)
 
     class SimOutput:
@@ -1698,31 +1716,43 @@ def sim2d(sb):
 
     return SimOutput(grid_x, grid_y, grid_amp, grid_z2)
 
-def sim_data(sb_in,STAGE_RANGE,STEP):
-    ''' 
+
+def sim_data(sb_in, STAGE_RANGE, STEP):
+    """
     STAGE_RANGE : range of stage movement in cm
     STEP : step size in cm
-    '''
-    beam_final = sb_in.a_sim.T * np.exp(complex(0,1)* sb_in.p_sim.T)
+    """
+    beam_final = sb_in.a_sim.T * np.exp(complex(0, 1) * sb_in.p_sim.T)
 
     x_interp = sb_in.x_sim[:, 0]
     y_interp = sb_in.y_sim[0, :]
-    func_beam = interpolate.interp2d(x_interp, y_interp, np.abs(beam_final)/np.max(np.abs(beam_final)), kind='cubic')
-    func_phase = interpolate.interp2d(x_interp, y_interp, np.arctan2(np.imag(beam_final), np.real(beam_final)), kind='cubic')
-    x_data = np.arange(-STAGE_RANGE/2, STAGE_RANGE/2, STEP)
-    y_data = np.arange(-STAGE_RANGE/2, STAGE_RANGE/2, STEP)
+    func_beam = interpolate.interp2d(
+        x_interp,
+        y_interp,
+        np.abs(beam_final) / np.max(np.abs(beam_final)),
+        kind="cubic",
+    )
+    func_phase = interpolate.interp2d(
+        x_interp,
+        y_interp,
+        np.arctan2(np.imag(beam_final), np.real(beam_final)),
+        kind="cubic",
+    )
+    x_data = np.arange(-STAGE_RANGE / 2, STAGE_RANGE / 2, STEP)
+    y_data = np.arange(-STAGE_RANGE / 2, STAGE_RANGE / 2, STEP)
     beam_data = func_beam(x_data, y_data)
     phase_data = func_phase(x_data, y_data)
-    x_data,y_data = np.meshgrid(x_data,y_data)
+    x_data, y_data = np.meshgrid(x_data, y_data)
 
     class output:
         def __init__(self, x_sim, y_sim, a_sim, p_sim):
-            self.a_data = beam_data/np.max(beam_data)
+            self.a_data = beam_data / np.max(beam_data)
             self.p_data = phase_data
             self.x_data = x_data
             self.y_data = y_data
 
     return output(x_data, y_data, beam_data, phase_data)
+
 
 def ff_fwhm_est(beam_fft, x_ang, y_ang):
 
