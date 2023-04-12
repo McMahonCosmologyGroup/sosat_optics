@@ -1,9 +1,9 @@
-cff-version: 1.2
+cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 authors:
   - family-names: Chesmore
     given-names: Grace E.
-title: "The Simons Observatory Small Aperture Telescope Optical Simulation$
+title: "The Simons Observatory Small Aperture Telescope Optical Simulation"
 version: 1.2.0
 date-released: 2022-10
 url: "https://github.com/mcmahoncosmologygroup/sosat_optics"
