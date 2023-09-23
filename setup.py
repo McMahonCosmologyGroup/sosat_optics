@@ -32,5 +32,5 @@ setup(
     author_email="chesmore@uchicago.edu, agthomas@uchicago.edu",
     packages=packages,
     package_dir={"sosat_optics": "sosat_optics"},
-        install_requires=["numpy", "matplotlib", "scipy"]
+    install_requires=["numpy", "matplotlib", "scipy"]
 )
