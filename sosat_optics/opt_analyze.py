@@ -209,7 +209,7 @@ def b2a(beam, phase):
     """
     FFT angular space to aperture plane.
     """
-    beam_complex = (abs(beam)) * np.exp(phase * np.pi / 180.0 * np.complex(0, 1))
+    beam_complex = (abs(beam)) * np.exp(phase * np.pi / 180.0 * 1j)
     tmp = np.fft.fftshift(beam_complex)
     tmp = np.fft.ifft2(beam_complex)
     aper_field = np.fft.fftshift(tmp)
@@ -221,7 +221,7 @@ def a2b(apert, phi):
     """
     FFT aperture plane to angular space.
     """
-    apert = (abs(apert)) * np.exp(phi * np.pi / 180.0 * np.complex(0, 1))
+    apert = (abs(apert)) * np.exp(phi * np.pi / 180.0 * 1j)
     tmp_new = np.fft.fftshift(apert)
     beam_complex = np.fft.fft2(tmp_new)
 
