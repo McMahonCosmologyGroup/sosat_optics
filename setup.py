@@ -1,5 +1,5 @@
 import os
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 
 setup(
     name="sosat_optics",
@@ -9,6 +9,7 @@ setup(
     long_description_content_type="text/markdown",
     author="Grace E. Chesmore, Alex Thomas, UChicago Lab",
     author_email="chesmore@uchicago.edu, agthomas@uchicago.edu",
-    packages=find_packages(exclude=["tests*"]),
-    install_requires=["numpy", "matplotlib", "scipy==1.10.1"]
+    packages=["sosat_optics"],
+    package_dir={"sosat_optics": "sosat_optics"},
+    install_requires=open("requirements.txt").read().splitlines()
 )
